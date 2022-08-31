@@ -27,6 +27,9 @@ public class PlayerController : MonoBehaviour
     private float turnTimer;
     private float wallJumpTimer;
     private float movementInputDirection;
+    private float dashTimeLeft;
+    private float lastImageXPos;
+    private float lastDash=-100f;
     public float movementSpeed=9.0f;
     public float jumpForce=18.0f;
     public float groundCheckRadius=0.3f;
@@ -44,6 +47,10 @@ public class PlayerController : MonoBehaviour
     public float ledgeClimbXOffset2 = 0f;
     public float ledgeClimbYOffset1=0f;
     public float ledgeClimbYOffset2=0f;
+    public float dashTime=0.2f;
+    public float dashSpeed=30.0f;
+    public float distanceBetweenImages=0.1f;
+    public float dashCoolDown=2.5f;
     private bool isFacingRight=true;
     private bool isRunning;
     public bool isGrounded;
@@ -55,6 +62,7 @@ public class PlayerController : MonoBehaviour
     private bool checkJumpMultiplier;
     private bool canMove;
     private bool canFlip;
+    private bool isDashing=false;
     public bool hasWallJumped;
     public bool isDoubleJumped;
     public bool canDoubleJump;
@@ -83,6 +91,7 @@ public class PlayerController : MonoBehaviour
         CheckIfWallSliding();
         CheckJump();
         CheckLedgeClimb();
+        CheckDash();
     }
     private void FixedUpdate()
     {
@@ -191,6 +200,7 @@ public class PlayerController : MonoBehaviour
         anim.SetBool("isWallSliding",isWallSliding);
         anim.SetBool("isDoubleJumped",isDoubleJumped);
         anim.SetBool("canClimbLedge",canClimbLedge);
+        anim.SetBool("isDashing",isDashing);
     }
     private void CheckInput()
     {
@@ -235,6 +245,48 @@ public class PlayerController : MonoBehaviour
             checkJumpMultiplier=false;
             rb.velocity=new Vector2(rb.velocity.x,rb.velocity.y*variableJumpHeightMultiplier);
         }
+        if(Input.GetButtonDown("Dash"))
+        {
+            if(Time.time >=(lastDash+dashCoolDown))
+            {
+                AttempToDash();
+            }
+            
+        }
+    }
+    private void AttempToDash()
+    {
+        isDashing=true;
+        dashTimeLeft=dashTime;
+        lastDash=Time.time;
+
+        AfterImagePool.Instance.GetFromPool();
+        lastImageXPos=transform.position.x;
+    }
+    private void CheckDash()
+    {
+        if(isDashing)
+        {
+            if(dashTimeLeft > 0)
+            {
+                    canMove=false;
+                    canFlip=false;
+                    rb.velocity=new Vector2(dashSpeed*facingDirection,rb.velocity.y);
+                    dashTimeLeft-=Time.deltaTime;
+
+                    if(Mathf.Abs(transform.position.x-lastImageXPos)>distanceBetweenImages)
+                {
+                    AfterImagePool.Instance.GetFromPool();
+                    lastImageXPos=transform.position.x;
+                }
+            }
+            if(dashTimeLeft<=0 || isTouchingWall)
+            {
+                isDashing=false;
+                canMove=true;
+                canFlip=true;
+            }
+        }
     }
 
     private void ApplyMovement()
@@ -255,6 +307,14 @@ public class PlayerController : MonoBehaviour
                 rb.velocity=new Vector2(rb.velocity.x,-wallSlideSpeed);
             }
         }
+    }
+    public void DisableFlip()
+    {
+        canFlip=false;
+    }
+    public void EnableFlip()
+    {
+        canFlip=true;
     }
     private void Flip(){
         if(!isWallSliding && canFlip)
