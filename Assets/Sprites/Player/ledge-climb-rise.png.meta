@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 11ad571b6fe623547ba5d5f3108d1f25
+guid: 5661efe52957f9f4cbf9401b44504379
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -128,10 +128,52 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: vagabond-death_0
+      name: ledge-climb-rise_0
       rect:
         serializedVersion: 2
-        x: 26
+        x: 8
+        y: 0
+        width: 11
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45b11adbf1832af4fac6a235d2aed40e
+      internalID: -1091953443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ledge-climb-rise_1
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 0
+        width: 11
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44b4243530cda1d4ea6a4940f983ef4f
+      internalID: -2138201090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ledge-climb-rise_2
+      rect:
+        serializedVersion: 2
+        x: 72
         y: 0
         width: 10
         height: 21
@@ -142,134 +184,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b04a2b36d89b1af4daf600d48bad787c
-      internalID: 1003945459
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: vagabond-death_1
-      rect:
-        serializedVersion: 2
-        x: 90
-        y: 0
-        width: 11
-        height: 21
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2e68ee8ad00529247b7f9f6f18b4815f
-      internalID: -699367539
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: vagabond-death_2
-      rect:
-        serializedVersion: 2
-        x: 154
-        y: 0
-        width: 11
-        height: 21
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: aa780dc26461e6344a4a1b3b734096d6
-      internalID: 1976841031
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: vagabond-death_3
-      rect:
-        serializedVersion: 2
-        x: 219
-        y: 0
-        width: 11
-        height: 21
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 78f277c0b50d3434ba49c92423cb5324
-      internalID: -1251199715
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: vagabond-death_4
-      rect:
-        serializedVersion: 2
-        x: 283
-        y: 0
-        width: 11
-        height: 21
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fc07f1d19aad4be4fa3fb7656b25d54f
-      internalID: -617396321
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: vagabond-death_5
-      rect:
-        serializedVersion: 2
-        x: 348
-        y: 0
-        width: 13
-        height: 21
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6e9e19563e971ab45a5f4ebe286180f7
-      internalID: -214826786
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: vagabond-death_6
-      rect:
-        serializedVersion: 2
-        x: 414
-        y: 0
-        width: 18
-        height: 21
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fc521b4f3420da642a4509caa9ce5b90
-      internalID: -1915410976
+      spriteID: e2e8066e679aa274489b14825117b7b4
+      internalID: 2131387073
       vertices: []
       indices: 
       edges: []
@@ -285,13 +201,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      vagabond-death_5: -214826786
-      vagabond-death_4: -617396321
-      vagabond-death_1: -699367539
-      vagabond-death_2: 1976841031
-      vagabond-death_0: 1003945459
-      vagabond-death_3: -1251199715
-      vagabond-death_6: -1915410976
+      ledge-climb-rise_0: -1091953443
+      ledge-climb-rise_1: -2138201090
+      ledge-climb-rise_2: 2131387073
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

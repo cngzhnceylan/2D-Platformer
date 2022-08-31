@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 11ad571b6fe623547ba5d5f3108d1f25
+guid: c83d7b455a79ef24a896a2f1ed4be9d3
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -128,31 +128,10 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: vagabond-death_0
+      name: ledge-climb_0
       rect:
         serializedVersion: 2
-        x: 26
-        y: 0
-        width: 10
-        height: 21
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b04a2b36d89b1af4daf600d48bad787c
-      internalID: 1003945459
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: vagabond-death_1
-      rect:
-        serializedVersion: 2
-        x: 90
+        x: 21
         y: 0
         width: 11
         height: 21
@@ -163,17 +142,17 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2e68ee8ad00529247b7f9f6f18b4815f
-      internalID: -699367539
+      spriteID: ee71a36423f0a414b904be805fe439df
+      internalID: -1843798410
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: vagabond-death_2
+      name: ledge-climb_1
       rect:
         serializedVersion: 2
-        x: 154
+        x: 53
         y: 0
         width: 11
         height: 21
@@ -184,60 +163,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aa780dc26461e6344a4a1b3b734096d6
-      internalID: 1976841031
+      spriteID: 91c7ed9c6ab899c4daf514c42f61f4d8
+      internalID: -2064762672
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: vagabond-death_3
+      name: ledge-climb_2
       rect:
         serializedVersion: 2
-        x: 219
-        y: 0
-        width: 11
-        height: 21
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 78f277c0b50d3434ba49c92423cb5324
-      internalID: -1251199715
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: vagabond-death_4
-      rect:
-        serializedVersion: 2
-        x: 283
-        y: 0
-        width: 11
-        height: 21
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fc07f1d19aad4be4fa3fb7656b25d54f
-      internalID: -617396321
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: vagabond-death_5
-      rect:
-        serializedVersion: 2
-        x: 348
-        y: 0
+        x: 87
+        y: 2
         width: 13
         height: 21
       alignment: 0
@@ -247,19 +184,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6e9e19563e971ab45a5f4ebe286180f7
-      internalID: -214826786
+      spriteID: 1deec074b8a1ae7458d7dbc80974259e
+      internalID: 634830159
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: vagabond-death_6
+      name: ledge-climb_3
       rect:
         serializedVersion: 2
-        x: 414
-        y: 0
-        width: 18
+        x: 123
+        y: 2
+        width: 10
         height: 21
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -268,8 +205,71 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fc521b4f3420da642a4509caa9ce5b90
-      internalID: -1915410976
+      spriteID: 06606b783ee9541458d233be5482138b
+      internalID: -31054337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ledge-climb_4
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 8
+        width: 11
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 374d3f6bbb991ae46a8e247fa3e0660a
+      internalID: -1081201240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ledge-climb_5
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 9
+        width: 11
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c155b36ba2c1d44db585612ed8b7dc3
+      internalID: 1945538316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ledge-climb_6
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 12
+        width: 10
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90712a793d680e04b9ed80aa05adc816
+      internalID: -1259831007
       vertices: []
       indices: 
       edges: []
@@ -285,13 +285,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      vagabond-death_5: -214826786
-      vagabond-death_4: -617396321
-      vagabond-death_1: -699367539
-      vagabond-death_2: 1976841031
-      vagabond-death_0: 1003945459
-      vagabond-death_3: -1251199715
-      vagabond-death_6: -1915410976
+      ledge-climb_6: -1259831007
+      ledge-climb_0: -1843798410
+      ledge-climb_2: 634830159
+      ledge-climb_4: -1081201240
+      ledge-climb_3: -31054337
+      ledge-climb_1: -2064762672
+      ledge-climb_5: 1945538316
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
