@@ -55,7 +55,9 @@ public class PlayerController : MonoBehaviour
     private bool checkJumpMultiplier;
     private bool canMove;
     private bool canFlip;
-    private bool hasWallJumped;
+    public bool hasWallJumped;
+    public bool isDoubleJumped;
+    public bool canDoubleJump;
     public bool isTouchingLedge;
     public bool canClimbLedge=false;
     public bool ledgeDetected;
@@ -92,6 +94,8 @@ public class PlayerController : MonoBehaviour
         if(isTouchingWall && movementInputDirection == facingDirection && rb.velocity.y<0 && !canClimbLedge)
         {
             isWallSliding=true;
+            amountOfJumpsLeft=1;
+           
         }
         else{
             isWallSliding=false;
@@ -136,8 +140,6 @@ public class PlayerController : MonoBehaviour
             }
             canMove=false;
             canFlip=false;
-
-            anim.SetBool("canClimbLedge",canClimbLedge);
         }
         if(canClimbLedge)
         {
@@ -156,10 +158,12 @@ public class PlayerController : MonoBehaviour
         if(amountOfJumpsLeft<=0)
         {
             canNormalJump=false;
+            isDoubleJumped=false;
         }
         else
         {
             canNormalJump=true;
+            canDoubleJump=true;
         }
     }
     private void CheckMovementDirection()
@@ -185,6 +189,8 @@ public class PlayerController : MonoBehaviour
         anim.SetFloat("velocityY",rb.velocity.y);
         anim.SetFloat("velocityX",rb.velocity.x);
         anim.SetBool("isWallSliding",isWallSliding);
+        anim.SetBool("isDoubleJumped",isDoubleJumped);
+        anim.SetBool("canClimbLedge",canClimbLedge);
     }
     private void CheckInput()
     {
@@ -194,7 +200,11 @@ public class PlayerController : MonoBehaviour
             if(isGrounded || (amountOfJumpsLeft > 0 && isTouchingWall))
             {
                 NormalJump();
-            }else
+            }else if(amountOfJumpsLeft==1)
+            {
+                DoubleJump();
+            }
+            else
             {
                 jumpTimer = jumpTimerSet;
                 isAttemptingToJump = true;
@@ -263,10 +273,15 @@ public class PlayerController : MonoBehaviour
             if(!isGrounded && isTouchingWall && movementInputDirection!=0 && movementInputDirection != facingDirection)
             {
                 WallJump();
+
             }
             else if(isGrounded)
             {
                 NormalJump();
+            }
+            else if(amountOfJumpsLeft==1)
+            {
+                DoubleJump();
             }
         }
         if(isAttemptingToJump)
@@ -280,10 +295,12 @@ public class PlayerController : MonoBehaviour
                 rb.velocity=new Vector2(rb.velocity.x,-8);
                 Debug.Log("Düşmeli");
                 hasWallJumped=false;
+               
             }
             else if(wallJumpTimer<=0)
             {
                 hasWallJumped=false;
+                
             }else
             {
                 wallJumpTimer-=Time.deltaTime;
@@ -307,7 +324,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity= new Vector2(rb.velocity.x,0.0f);
             isWallSliding=false;
-            amountOfJumpsLeft=amountOfJumps;
+            amountOfJumpsLeft=1;
             amountOfJumpsLeft--;
             Vector2 forceToAdd= new Vector2(wallJumpForce*wallJumpDirection.x*movementInputDirection,wallJumpForce*wallJumpDirection.y);
             rb.AddForce(forceToAdd,ForceMode2D.Impulse);
@@ -320,6 +337,18 @@ public class PlayerController : MonoBehaviour
             hasWallJumped=true;
             wallJumpTimer=wallJumpTimerSet;
             lastWallJumpDirection=-facingDirection;
+        }
+    }
+    private void DoubleJump()
+    {
+        if(canDoubleJump){
+        rb.velocity=new Vector2(rb.velocity.x,jumpForce);
+        amountOfJumpsLeft--;
+        isWallSliding=false;
+        jumpTimer=0;
+        isAttemptingToJump=false;
+        checkJumpMultiplier=true;
+        isDoubleJumped=true;
         }
     }
     private void OnDrawGizmos(){
