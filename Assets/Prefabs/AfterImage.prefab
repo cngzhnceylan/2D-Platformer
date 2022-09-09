@@ -72,7 +72,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -693573983
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: -1
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -99,4 +99,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeTime: 0.1
   alphaSet: 0.8
+  alphaMultiplier: 10
   player: {fileID: 0}
+  sR: {fileID: 0}
+  playerPrefab: {fileID: 1094873150873358790, guid: 2ac8ee7ac890d4849b2cef3321a673d2, type: 3}
+  playerSr: {fileID: 0}
+  color: {r: 0, g: 0, b: 0, a: 0}

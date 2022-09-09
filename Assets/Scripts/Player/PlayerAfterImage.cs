@@ -10,10 +10,13 @@ private float timeActivated;
 private float alpha;
 [SerializeField]
 private float alphaSet=0.8f;
+[SerializeField]
 private float alphaMultiplier=0.50f;
 [SerializeField]
 private Transform player;
 public SpriteRenderer sR;
+[SerializeField]
+private GameObject playerPrefab;
 public SpriteRenderer playerSr;
 public Color color;
 
@@ -23,7 +26,7 @@ private void OnEnable()
 {
     sR=GetComponent<SpriteRenderer>();
     player=GameObject.FindGameObjectWithTag("Player").transform;
-    playerSr=GameObject.Find("Player").GetComponent<SpriteRenderer>();
+    playerSr=playerPrefab.GetComponent<SpriteRenderer>();
 
     alpha=alphaSet;
     sR.sprite=playerSr.sprite;
@@ -33,7 +36,8 @@ private void OnEnable()
 }
 private void Update()
 {
-    alpha *=alphaMultiplier;
+    
+    alpha -=alphaMultiplier*Time.deltaTime;
     color=new Color(1.0f,1.0f,1.0f,alpha);
     sR.color=color;
 

@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
     private Vector2 ledgePosBot;
     private Vector2 ledgePos1;
     private Vector2 ledgePos2;
+    [SerializeField]
+    private Vector2 knockbackSpeed;
     private int amountOfJumps=2;
     public int amountOfJumpsLeft;
     private int facingDirection=1;
@@ -30,7 +32,10 @@ public class PlayerController : MonoBehaviour
     private float dashTimeLeft;
     private float lastImageXPos;
     private float lastDash=-100f;
-    public float movementSpeed=9.0f;
+    private float knockbackStartTime;
+    [SerializeField]
+    private float knockbackDuration;
+    public float movementSpeed=7.5f;
     public float jumpForce=18.0f;
     public float groundCheckRadius=0.3f;
     public float wallCheckDistance=0.6f;
@@ -60,8 +65,8 @@ public class PlayerController : MonoBehaviour
     public bool canWallJump;
     private bool isAttemptingToJump;
     private bool checkJumpMultiplier;
-    private bool canMove;
-    private bool canFlip;
+    public bool canMove;
+    public bool canFlip;
     private bool isDashing=false;
     public bool hasWallJumped;
     public bool isDoubleJumped;
@@ -69,6 +74,8 @@ public class PlayerController : MonoBehaviour
     public bool isTouchingLedge;
     public bool canClimbLedge=false;
     public bool ledgeDetected;
+    private bool knockback;
+      private PlayerStats PS;
     
     
     // Start is called before the first frame update
@@ -76,6 +83,7 @@ public class PlayerController : MonoBehaviour
     {
         rb=GetComponent<Rigidbody2D>();
         anim=GetComponent<Animator>();
+        PS=GetComponent<PlayerStats>();
         amountOfJumpsLeft=amountOfJumps;
         wallHopDirection.Normalize();
         wallJumpDirection.Normalize();
@@ -92,6 +100,9 @@ public class PlayerController : MonoBehaviour
         CheckJump();
         CheckLedgeClimb();
         CheckDash();
+        CheckIfCanAttack();
+        AttackMovement();
+        CheckKnockback();
     }
     private void FixedUpdate()
     {
@@ -108,6 +119,24 @@ public class PlayerController : MonoBehaviour
         }
         else{
             isWallSliding=false;
+        }
+    }
+    public bool GetDashStatus()
+    {
+        return isDashing;
+    }
+    public void Knockback(int direction)
+    {
+        knockback=true;
+        knockbackStartTime=Time.time;
+        rb.velocity=new Vector2(knockbackSpeed.x*direction,knockbackSpeed.y);
+    }
+    private void CheckKnockback()
+    {
+        if(Time.time>= knockbackStartTime + knockbackDuration && knockback)
+        {
+            knockback=false;
+            rb.velocity=new Vector2(0.0f,rb.velocity.y);
         }
     }
     public void FinishLedgeClimb()
@@ -193,6 +222,21 @@ public class PlayerController : MonoBehaviour
     }
     private void UpdateAnimations()
     {
+        if(PS.currentHealth<=0)
+        {
+            
+            rb.velocity=new Vector2(0,rb.velocity.y);
+            canMove=false;
+            canFlip=false;
+            canNormalJump=false;
+            canDoubleJump=false;
+            PlayerCombatController.instance.attackRadius=0;
+            knockback=false;
+            isDashing=false;
+            
+            
+            anim.SetTrigger("isDead");
+        }
         anim.SetBool("isRunning",isRunning);
         anim.SetBool("isGrounded",isGrounded);
         anim.SetFloat("velocityY",rb.velocity.y);
@@ -201,6 +245,7 @@ public class PlayerController : MonoBehaviour
         anim.SetBool("isDoubleJumped",isDoubleJumped);
         anim.SetBool("canClimbLedge",canClimbLedge);
         anim.SetBool("isDashing",isDashing);
+        anim.SetBool("Knockback",knockback);
     }
     private void CheckInput()
     {
@@ -288,15 +333,34 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-
+    private void CheckIfCanAttack()
+    {
+        if(isGrounded && !isTouchingWall && !isDashing )
+        {
+            PlayerCombatController.instance.canReceieveInput=true;
+        }else
+        {
+            PlayerCombatController.instance.canReceieveInput=false;
+        }
+    }
+        private void AttackMovement()
+    {
+        if(PlayerCombatController.instance.isAttacking==true)
+        {
+            movementSpeed=2.5f;
+        }else
+        {
+            movementSpeed=7.5f;
+        }
+    }
     private void ApplyMovement()
     {
         
-        if(!isGrounded && !isWallSliding && movementInputDirection==0)
+        if(!isGrounded && !isWallSliding && movementInputDirection==0 && !knockback)
         {
             rb.velocity=new Vector2(rb.velocity.x*airDragMultiplier, rb.velocity.y);
         }
-        else if(canMove)
+        else if(canMove && !knockback)
         {
              rb.velocity=new Vector2(movementSpeed*movementInputDirection,rb.velocity.y);
         }
@@ -317,7 +381,7 @@ public class PlayerController : MonoBehaviour
         canFlip=true;
     }
     private void Flip(){
-        if(!isWallSliding && canFlip)
+        if(!isWallSliding && canFlip && !knockback)
         {
             facingDirection*=-1;
             isFacingRight = !isFacingRight;
@@ -353,7 +417,6 @@ public class PlayerController : MonoBehaviour
             if(hasWallJumped && movementInputDirection == -lastWallJumpDirection)
             {
                 rb.velocity=new Vector2(rb.velocity.x,-8);
-                Debug.Log("Düşmeli");
                 hasWallJumped=false;
                
             }
