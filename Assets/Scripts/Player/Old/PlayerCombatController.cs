@@ -12,7 +12,7 @@ public class PlayerCombatController : MonoBehaviour
   public bool canReceieveInput;
   public bool inputReceived;
   public bool isAttacking;
-  private float[] attackDetails= new float[2];
+  private AttackDetails attackDetails;
   private PlayerController PC;
   private PlayerStats PS;
   
@@ -52,8 +52,8 @@ public void Attack()
 private void CheckAttackHitBox()
 {
     Collider2D[] detectedObjects=Physics2D.OverlapCircleAll(AttackHitBoxPos.position,attackRadius,WhatIsDamagable);
-    attackDetails[0]=attackDamage;
-    attackDetails[1]=transform.position.x;
+    attackDetails.damageAmount=attackDamage;
+    attackDetails.position=transform.position;
     
     foreach(Collider2D collider in detectedObjects)
     {
@@ -73,13 +73,13 @@ public void InputManager()
         canReceieveInput=false;
     }
 }
-private void Damage(float[] attackDetails)
+private void Damage(AttackDetails attackDetails)
 {
     if(!PC.GetDashStatus())
     {
         int direction;
-        PS.DecreaseHealth(attackDetails[0]);
-        if(attackDetails[1]< transform.position.x)
+        PS.DecreaseHealth(attackDetails.damageAmount);
+        if(attackDetails.position.x< transform.position.x)
             {
                 direction=1;
 

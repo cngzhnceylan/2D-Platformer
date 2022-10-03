@@ -22,6 +22,7 @@ public virtual void Enter()
 {
     startTime=Time.time;
     entity.anim.SetBool(animBoolName, true);
+    DoChecks();
 }
 
 public virtual void Exit()
@@ -35,6 +36,10 @@ public virtual void LogicUpdate()
 }
 
 public virtual void PhysicsUpdate()
+{
+    DoChecks();
+}
+public virtual void DoChecks()
 {
 
 }
