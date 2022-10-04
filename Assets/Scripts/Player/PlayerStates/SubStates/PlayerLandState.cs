@@ -12,7 +12,7 @@ public class PlayerLandState : GroundedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if(inputX !=0 && isGrounded)
+        if(inputX !=0)
         {
             pSMachine.ChangeState(player.moveState);
         }
