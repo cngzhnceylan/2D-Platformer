@@ -8,6 +8,7 @@ public class PlayerState
     protected PSMachine pSMachine;
     protected PData pData;
     protected bool isAnimationFinished;
+    protected bool isExitingState;
     protected float startTime;
     private string animBoolName;
 
@@ -26,12 +27,14 @@ public class PlayerState
         player.anim.SetBool(animBoolName,true);
         isAnimationFinished=false;
         Debug.Log(pSMachine.CurrentState);
+        isExitingState=false;
         
     }
 
     public virtual void Exit()
     {
         player.anim.SetBool(animBoolName,false);
+        isExitingState=true;
     }
 
     public virtual void LogicUpdate()

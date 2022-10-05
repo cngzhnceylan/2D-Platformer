@@ -28,7 +28,7 @@ public class PlayerMoveState : GroundedState
         base.LogicUpdate();
         player.CheckIfShouldFlip(inputX);
         player.SetVelocityX(pData.movementVelocity * inputX);
-        if(inputX ==0)
+        if(inputX ==0 && !isExitingState)
         {
             pSMachine.ChangeState(player.idleState);
         }

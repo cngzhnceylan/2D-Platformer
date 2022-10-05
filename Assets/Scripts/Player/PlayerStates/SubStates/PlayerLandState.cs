@@ -12,15 +12,17 @@ public class PlayerLandState : GroundedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if(inputX !=0)
+        if(!isExitingState)
         {
-            pSMachine.ChangeState(player.moveState);
+            if(inputX !=0)
+            {
+                pSMachine.ChangeState(player.moveState);
+            }
+            else if(isAnimationFinished)
+            {
+                pSMachine.ChangeState(player.idleState);
+            }
         }
-        else if(isAnimationFinished)
-        {
-            pSMachine.ChangeState(player.idleState);
-        }
-
     }
 
 }

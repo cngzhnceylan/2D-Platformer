@@ -39,7 +39,6 @@ public class GroundedState : PlayerState
         grabInput=player.InputHandler.grabInput;
         if(JumpInput && player.jumpState.CanJump())
         {
-            player.InputHandler.UseJumpInput();
             pSMachine.ChangeState(player.jumpState);
         }
         else if(!isGrounded)
