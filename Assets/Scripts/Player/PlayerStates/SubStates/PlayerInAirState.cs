@@ -6,18 +6,22 @@ public class PlayerInAirState : PlayerState
 {
     private int xInput;
     private bool grabInput;
-    private bool isGrounded;
+    private bool dashInput;
     private bool jumpInput;
     private bool jumpInputStop;
-    private bool coyoteTime;
-    private bool wallJumpCoyoteTime;
+    
+    private bool isGrounded;
     private bool isJumping;
     private bool isTouchingWall;
     private bool isTouchingWallBack;
     private bool oldIsTouchingWall;
     private bool oldIsTouchingWallBack;
+    private bool isTouchingLedge;
 
+    private bool coyoteTime;
+    private bool wallJumpCoyoteTime;
     private float startWallJumpCoyoteTime;
+
     public PlayerInAirState(Player player, PSMachine pSMachine, PData pData, string animBoolName) : base(player, pSMachine, pData, animBoolName)
     {
     }
@@ -31,6 +35,12 @@ public class PlayerInAirState : PlayerState
         isGrounded=player.CheckIfGrounded();
         isTouchingWall=player.CheckIfTouchingWall();
         isTouchingWallBack=player.CheckIfTouchingWallBack();
+        isTouchingLedge=player.CheckIfTouchingLedge();
+
+        if(isTouchingWall && !isTouchingLedge)
+        {
+            player.ledgeClimbState.SetDetectedPosition(player.transform.position);
+        }
 
         if(!wallJumpCoyoteTime && !isTouchingWall && !isTouchingWallBack && (oldIsTouchingWall || oldIsTouchingWallBack))
         {
@@ -63,10 +73,15 @@ public class PlayerInAirState : PlayerState
         jumpInput=player.InputHandler.JumpInput;
         jumpInputStop=player.InputHandler.JumpInputStop;
         grabInput=player.InputHandler.grabInput;
+        dashInput=player.InputHandler.dashInput;
         CheckJumpMultiplier();
         if(isGrounded && player.currentVelocity.y< 0.01f)
         {
             pSMachine.ChangeState(player.landState);
+        }
+        else if(isTouchingWall && !isTouchingLedge && !isGrounded)
+        {
+            pSMachine.ChangeState(player.ledgeClimbState);
         }
         else if(jumpInput && (isTouchingWall || isTouchingWallBack || wallJumpCoyoteTime))
         {
@@ -79,7 +94,7 @@ public class PlayerInAirState : PlayerState
         {
             pSMachine.ChangeState(player.jumpState);
         }
-        else if(isTouchingWall && grabInput)
+        else if(isTouchingWall && grabInput && isTouchingLedge)
         {
             pSMachine.ChangeState(player.wallGrabState);
         }
@@ -87,12 +102,17 @@ public class PlayerInAirState : PlayerState
         {
             pSMachine.ChangeState(player.wallSlideState);
         }
+        else if(dashInput && player.dashState.CheckIfCanDash())
+        {
+            pSMachine.ChangeState(player.dashState);
+        }
         else
         {
             player.CheckIfShouldFlip(xInput);
             player.SetVelocityX(pData.movementVelocity*xInput);
             
             player.anim.SetFloat("yVelocity",player.currentVelocity.y);
+            player.anim.SetFloat("xVelocity",Mathf.Abs(player.currentVelocity.x));
         }
     }
     private void CheckJumpMultiplier()
