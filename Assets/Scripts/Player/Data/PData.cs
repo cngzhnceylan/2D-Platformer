@@ -9,6 +9,10 @@ public class PData : ScriptableObject
 {
 [Header("Move State")]
 public float movementVelocity =10f;
+[Header("Crouch State")]
+public float crouchMoveVelocity= 5f;
+public float crouchColliderHeight=0.8f;
+public float standColliderHeight=1.57f;
 
 [Header("Jump State")]
 public float jumpVelocity=15f;

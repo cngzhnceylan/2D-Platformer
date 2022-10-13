@@ -20,6 +20,8 @@ public class Player : MonoBehaviour
     public PlayerWallJumpState wallJumpState {get;private set;}
     public PlayerLedgeClimbState ledgeClimbState {get; private set;}
     public PlayerDashState dashState {get; private set;}
+    public PlayerCrouchIdleState crouchIdleState{get; private set;}
+    public PlayerCrouchMoveState crouchMoveState{get; private set;}
     [SerializeField] private PData pData;
     #endregion
     #region Components
@@ -27,6 +29,7 @@ public class Player : MonoBehaviour
     public PlayerInputHandler InputHandler {get; private set;}
     public Rigidbody2D RB{get; private set;}
     public Transform dashDirectionIndicator{get; private set;}
+    public BoxCollider2D movementCollider{get; private set;}
     #endregion
     #region Other Variables
     public Vector2 currentVelocity{get; private set;}
@@ -37,6 +40,7 @@ public class Player : MonoBehaviour
     [SerializeField] Transform groundCheck;
     [SerializeField] Transform wallCheck;
     [SerializeField] Transform ledgeCheck;
+    [SerializeField] Transform ceilingCheck;
     #endregion
 
     
@@ -55,7 +59,9 @@ public class Player : MonoBehaviour
         wallGrabState=new PlayerWallGrabState(this,pSMachine,pData,"WallGrab");
         wallJumpState=new PlayerWallJumpState(this,pSMachine,pData,"InAir");
         ledgeClimbState=new PlayerLedgeClimbState(this,pSMachine,pData,"LedgeClimbState");
-        dashState=new PlayerDashState(this,pSMachine,pData,"InAir");
+        dashState=new PlayerDashState(this,pSMachine,pData,"Land");
+        crouchIdleState=new PlayerCrouchIdleState(this,pSMachine,pData,"CrouchIdle");
+        crouchMoveState=new PlayerCrouchMoveState(this,pSMachine,pData,"CrouchMove");
 
     }
 
@@ -64,6 +70,7 @@ public class Player : MonoBehaviour
         anim=GetComponent<Animator>();
         InputHandler=GetComponent<PlayerInputHandler>();
         RB=GetComponent<Rigidbody2D>();
+        movementCollider=GetComponent<BoxCollider2D>();
         dashDirectionIndicator=transform.Find("DashDirectionIndicator");
         facingDirection=1;
         pSMachine.Initialize(idleState);
@@ -110,13 +117,20 @@ public class Player : MonoBehaviour
         RB.velocity=workspace;
         currentVelocity=workspace;
     }
-
+    public void SetColliderHeight(float height)
+    {
+        Vector2 center=movementCollider.offset;
+        workspace.Set(movementCollider.size.x,height);
+        center.y+= (height-movementCollider.size.y)/2;
+        movementCollider.size=workspace;
+        movementCollider.offset=center;
+    }
     public Vector2 DetermineCornerPosition()
     {
         RaycastHit2D xHit=Physics2D.Raycast(wallCheck.position,Vector2.right*facingDirection,pData.wallCheckDistance,pData.whatIsGround);
         float xDist=xHit.distance;
-        workspace.Set(xDist*facingDirection,0f);
-        RaycastHit2D yHit=Physics2D.Raycast(ledgeCheck.position+(Vector3)(workspace),Vector2.down,ledgeCheck.position.y-wallCheck.position.y,pData.whatIsGround);
+        workspace.Set((xDist+ 0.015f)*facingDirection,0f);
+        RaycastHit2D yHit=Physics2D.Raycast(ledgeCheck.position+(Vector3)(workspace),Vector2.down,ledgeCheck.position.y-wallCheck.position.y + 0.015f,pData.whatIsGround);
         float yDist=yHit.distance;
         workspace.Set(wallCheck.position.x + (xDist *facingDirection),ledgeCheck.position.y - yDist);
         return workspace;
@@ -134,6 +148,10 @@ public class Player : MonoBehaviour
         {
             Flip();
         }
+    }
+    public bool CheckForCeiling()
+    {
+        return Physics2D.OverlapCircle(ceilingCheck.position,pData.groundCheckRadius,pData.whatIsGround);
     }
     public bool CheckIfGrounded()
     {

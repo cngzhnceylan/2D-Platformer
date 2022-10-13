@@ -26,9 +26,18 @@ public class PlayerIdleState : GroundedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if(inputX != 0 && !isExitingState)
+        
+        if(!isExitingState)
         {
-            pSMachine.ChangeState(player.moveState);
+
+            if(inputX != 0)
+            {
+                pSMachine.ChangeState(player.moveState);
+            }
+            else if(inputY == -1)
+            {
+                pSMachine.ChangeState(player.crouchIdleState);
+            }
         }
     }
 
